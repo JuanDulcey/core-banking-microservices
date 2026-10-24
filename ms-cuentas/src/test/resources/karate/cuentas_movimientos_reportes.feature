@@ -111,3 +111,20 @@ Feature: Casos de Uso 2, 3, 4, F3 (Saldo no disponible) y Caso de Uso 5 (Estado 
     When method patch
     Then status 200
     And match response.saldo == 1250.0
+
+    # Validación adicional F4: Rango de fechas separado con guion (d/M/yyyy-d/M/yyyy)
+    Given path '/reportes'
+    And param fecha = '8/2/2022-10/2/2022'
+    And param cliente = 'Marianela Montalvo'
+    When method get
+    Then status 200
+    And match response.movimientos == '#[2]'
+
+    # Validación adicional F1 (CRU estricto) y Manejo de Excepciones (405 y 400)
+    Given path '/api/cuentas/585545'
+    When method delete
+    Then status 405
+
+    Given path '/api/movimientos/identificador-no-uuid'
+    When method get
+    Then status 400

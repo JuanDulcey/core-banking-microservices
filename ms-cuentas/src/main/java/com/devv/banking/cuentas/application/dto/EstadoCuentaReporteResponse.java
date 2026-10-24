@@ -7,6 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * DTO compuesto del reporte de Estado de Cuenta (F4), incluyendo el resumen de cuentas asociadas
+ * y el listado detallado de movimientos en formato JSON.
+ */
 @Schema(description = "Estado de cuenta consolidado por cliente y rango de fechas (F4)")
 public record EstadoCuentaReporteResponse(
         String clienteId,

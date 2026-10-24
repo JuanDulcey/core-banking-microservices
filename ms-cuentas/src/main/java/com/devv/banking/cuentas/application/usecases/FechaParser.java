@@ -7,9 +7,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Utilidad tolerante para interpretar fechas ISO-8601 y formato latino (d/M/yyyy).
+ * Utilidad tolerante para interpretar fechas ISO-8601 y formato latino (d/M/yyyy),
+ * admitiendo múltiples separadores de rango en consultas de reportes.
  */
 public final class FechaParser {
 
@@ -20,6 +23,14 @@ public final class FechaParser {
     );
 
     private static final DateTimeFormatter REPORTE_OUTPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy");
+
+    private static final Pattern ISO_HYPHEN_RANGE = Pattern.compile(
+            "^(\\d{4}-\\d{1,2}-\\d{1,2})\\s*-\\s*(\\d{4}-\\d{1,2}-\\d{1,2})$"
+    );
+
+    private static final Pattern SLASH_HYPHEN_RANGE = Pattern.compile(
+            "^(\\d{1,2}/\\d{1,2}/\\d{4})\\s*-\\s*(\\d{1,2}/\\d{1,2}/\\d{4})$"
+    );
 
     private FechaParser() {
     }
@@ -61,13 +72,30 @@ public final class FechaParser {
 
         if (rangoCombinado != null && !rangoCombinado.isBlank()) {
             String trimmed = rangoCombinado.trim();
+            Matcher isoHyphen = ISO_HYPHEN_RANGE.matcher(trimmed);
+            Matcher slashHyphen = SLASH_HYPHEN_RANGE.matcher(trimmed);
+
             String[] partes;
-            if (trimmed.contains(",")) {
+            if (isoHyphen.matches()) {
+                partes = new String[]{isoHyphen.group(1), isoHyphen.group(2)};
+            } else if (slashHyphen.matches()) {
+                partes = new String[]{slashHyphen.group(1), slashHyphen.group(2)};
+            } else if (trimmed.contains(",")) {
                 partes = trimmed.split(",", 2);
+            } else if (trimmed.contains(";")) {
+                partes = trimmed.split(";", 2);
             } else if (trimmed.contains(":")) {
                 partes = trimmed.split(":", 2);
             } else if (trimmed.contains("..")) {
                 partes = trimmed.split("\\.\\.", 2);
+            } else if (trimmed.contains("_")) {
+                partes = trimmed.split("_", 2);
+            } else if (trimmed.toLowerCase().contains(" al ")) {
+                partes = trimmed.split("(?i)\\s+al\\s+", 2);
+            } else if (trimmed.toLowerCase().contains(" a ")) {
+                partes = trimmed.split("(?i)\\s+a\\s+", 2);
+            } else if (trimmed.toLowerCase().contains(" to ")) {
+                partes = trimmed.split("(?i)\\s+to\\s+", 2);
             } else {
                 // Si se envía una sola fecha, el rango cubre ese mismo día completo
                 LocalDate unica = parsearFecha(trimmed);

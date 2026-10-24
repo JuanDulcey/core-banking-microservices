@@ -1,6 +1,7 @@
 package com.devv.banking.cuentas.domain.model;
 
 import java.math.BigDecimal;
+import java.text.Normalizer;
 import java.util.Locale;
 
 /**
@@ -22,7 +23,9 @@ public enum TipoMovimiento {
 
     public static TipoMovimiento resolver(String textoOpcional, BigDecimal valor) {
         if (textoOpcional != null && !textoOpcional.isBlank()) {
-            String upper = textoOpcional.trim().toUpperCase(Locale.ROOT);
+            String sinTildes = Normalizer.normalize(textoOpcional.trim(), Normalizer.Form.NFD)
+                    .replaceAll("\\p{M}", "");
+            String upper = sinTildes.toUpperCase(Locale.ROOT);
             if (upper.startsWith("RET") || upper.startsWith("DEB") || upper.startsWith("EGR")) {
                 return RETIRO;
             }

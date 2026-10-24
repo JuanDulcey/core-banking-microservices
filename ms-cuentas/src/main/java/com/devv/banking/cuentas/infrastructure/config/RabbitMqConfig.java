@@ -13,6 +13,12 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuración de mensajería AMQP (RabbitMQ) para {@code ms-cuentas}.
+ * <p>
+ * Declara la cola durable de sincronización de clientes, su enlace al Topic Exchange y la
+ * infraestructura de resiliencia con Dead Letter Exchange ({@code DLX}) y Dead Letter Queue ({@code DLQ}).
+ */
 @Configuration
 public class RabbitMqConfig {
 

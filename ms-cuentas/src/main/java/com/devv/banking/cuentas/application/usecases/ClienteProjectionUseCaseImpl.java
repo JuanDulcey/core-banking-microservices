@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -56,7 +55,7 @@ public class ClienteProjectionUseCaseImpl implements ClienteProjectionUseCase {
             return;
         }
 
-        boolean estadoInicial = !"DELETED".equalsIgnoreCase(command.eventType().toUpperCase(Locale.ROOT)) && command.estado();
+        boolean estadoInicial = !"DELETED".equalsIgnoreCase(command.eventType()) && command.estado();
         ClienteSnapshot nuevoSnapshot = new ClienteSnapshot(
                 command.id(),
                 command.clienteId(),

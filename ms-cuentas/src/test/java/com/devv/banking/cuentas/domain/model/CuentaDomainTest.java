@@ -107,4 +107,26 @@ class CuentaDomainTest {
                 .isInstanceOf(BusinessValidationException.class)
                 .hasMessageContaining("inactiva");
     }
+
+    @Test
+    @DisplayName("Debe interpretar tipos de movimiento con tildes ('Débito' / 'Crédito') sin errores de signo")
+    void debeNormalizarTiposConTildes() {
+        Cuenta cuenta = Cuenta.abrirNueva(
+                "585545",
+                TipoCuenta.CORRIENTE,
+                new BigDecimal("1000.00"),
+                true,
+                UUID.randomUUID()
+        );
+
+        Movimiento debito = cuenta.registrarMovimiento(new BigDecimal("250.00"), "Débito", null);
+        assertThat(debito.getTipoMovimiento()).isEqualTo(TipoMovimiento.RETIRO);
+        assertThat(debito.getValor()).isEqualByComparingTo("-250.00");
+        assertThat(cuenta.getSaldoDisponible()).isEqualByComparingTo("750.00");
+
+        Movimiento credito = cuenta.registrarMovimiento(new BigDecimal("150.00"), "Crédito", null);
+        assertThat(credito.getTipoMovimiento()).isEqualTo(TipoMovimiento.DEPOSITO);
+        assertThat(credito.getValor()).isEqualByComparingTo("150.00");
+        assertThat(cuenta.getSaldoDisponible()).isEqualByComparingTo("900.00");
+    }
 }

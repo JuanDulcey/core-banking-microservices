@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public record MovimientoCreateRequest(
 
         @NotBlank(message = "El número de cuenta es obligatorio")
-        @JsonAlias({"numero_cuenta", "Numero Cuenta"})
+        @JsonAlias({"numero_cuenta", "Numero Cuenta", "cuenta", "cuentaNumero"})
         @Schema(example = "478758")
         String numeroCuenta,
 

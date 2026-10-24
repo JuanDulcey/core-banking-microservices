@@ -5,6 +5,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * DTO de entrada para la actualización completa de una cuenta bancaria ({@code PUT /api/cuentas/{id}}).
+ */
 @Schema(description = "Solicitud para actualización completa de una cuenta (PUT)")
 public record CuentaUpdateRequest(
 

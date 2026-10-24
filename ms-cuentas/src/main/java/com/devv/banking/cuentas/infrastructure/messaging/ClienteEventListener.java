@@ -9,6 +9,10 @@ import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * Adaptador Primario de Mensajería AMQP (Driving Adapter): escucha asíncronamente los eventos
+ * de {@code banking.clientes.exchange} y desvía mensajes inválidos a la Dead Letter Queue ({@code DLQ}).
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor

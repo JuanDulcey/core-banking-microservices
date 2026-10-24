@@ -4,6 +4,9 @@ import com.devv.banking.cuentas.domain.model.ClienteSnapshot;
 import com.devv.banking.cuentas.infrastructure.entities.ClienteSnapshotEntity;
 import org.mapstruct.Mapper;
 
+/**
+ * Mapper MapStruct entre la proyección de dominio {@link ClienteSnapshot} y su entidad JPA.
+ */
 @Mapper(componentModel = "spring")
 public interface ClienteSnapshotMapper {
 

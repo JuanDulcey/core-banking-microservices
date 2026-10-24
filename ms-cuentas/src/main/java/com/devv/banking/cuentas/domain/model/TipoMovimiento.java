@@ -3,6 +3,9 @@ package com.devv.banking.cuentas.domain.model;
 import java.math.BigDecimal;
 import java.util.Locale;
 
+/**
+ * Clasificación contable de un movimiento bancario (ingreso por depósito o egreso por retiro).
+ */
 public enum TipoMovimiento {
     DEPOSITO("Deposito"),
     RETIRO("Retiro");

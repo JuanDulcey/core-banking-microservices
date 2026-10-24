@@ -16,6 +16,10 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Entidad JPA para la tabla {@code cuentas}.
+ * Incluye control de versión ({@link Version}) para bloqueo optimista complementario al bloqueo pesimista.
+ */
 @Entity
 @Table(name = "cuentas")
 @Getter

@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * DTO de salida que expone los atributos públicos de un {@link Cliente} omitiendo su hash de contraseña.
+ */
 @Schema(description = "Representación pública de un cliente (sin exponer contraseña)")
 public record ClienteResponse(
         UUID id,

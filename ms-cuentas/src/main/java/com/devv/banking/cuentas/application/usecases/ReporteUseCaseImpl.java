@@ -28,6 +28,10 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Caso de uso de lectura optimizado ({@code readOnly = true}) para la generación del reporte
+ * de Estado de Cuenta consolidado por rango de fechas y cliente (F4).
+ */
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor

@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Repositorio Spring Data JPA para operaciones SQL sobre la jerarquía {@code personas -> clientes}.
+ */
 public interface ClienteJpaRepository extends JpaRepository<ClienteEntity, UUID> {
 
     Optional<ClienteEntity> findByClienteIdIgnoreCase(String clienteId);

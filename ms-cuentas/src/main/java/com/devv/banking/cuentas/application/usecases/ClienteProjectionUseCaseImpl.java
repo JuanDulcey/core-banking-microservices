@@ -12,6 +12,12 @@ import java.time.Instant;
 import java.util.Locale;
 import java.util.Optional;
 
+/**
+ * Orquestador de sincronización asíncrona de clientes (Patrón Event-Carried State Transfer).
+ * <p>
+ * Garantiza idempotencia comparando {@code occurredAt} contra la última marca de tiempo registrada,
+ * evitando sobrescribir el estado local si dos eventos AMQP llegan fuera de orden.
+ */
 @Slf4j
 @Service
 @Transactional

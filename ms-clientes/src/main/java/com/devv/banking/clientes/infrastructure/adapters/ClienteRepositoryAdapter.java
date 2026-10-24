@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Adaptador Secundario de Persistencia (Driven Adapter): implementa {@link ClienteRepositoryPort}
+ * delegando el acceso a datos en Spring Data JPA y traduciendo objetos con {@link ClientePersistenceMapper}.
+ */
 @Component
 @RequiredArgsConstructor
 public class ClienteRepositoryAdapter implements ClienteRepositoryPort {

@@ -21,6 +21,10 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Manejador global de errores HTTP en {@code ms-cuentas} bajo el estándar RFC 9457 ({@link ProblemDetail}).
+ * Captura {@link SaldoNoDisponibleException} (F3) retornando HTTP 422 con el mensaje exacto {@code "Saldo no disponible"}.
+ */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {

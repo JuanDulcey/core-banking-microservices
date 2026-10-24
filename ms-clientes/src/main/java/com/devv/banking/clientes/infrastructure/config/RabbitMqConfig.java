@@ -8,6 +8,11 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuración de mensajería AMQP (RabbitMQ) para {@code ms-clientes}.
+ * Declara el Topic Exchange durable donde se publican los eventos del ciclo de vida de clientes
+ * serializados en JSON.
+ */
 @Configuration
 public class RabbitMqConfig {
 

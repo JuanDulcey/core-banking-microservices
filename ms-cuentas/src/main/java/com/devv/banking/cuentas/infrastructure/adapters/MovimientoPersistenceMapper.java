@@ -4,6 +4,9 @@ import com.devv.banking.cuentas.domain.model.Movimiento;
 import com.devv.banking.cuentas.infrastructure.entities.MovimientoEntity;
 import org.mapstruct.Mapper;
 
+/**
+ * Mapper MapStruct entre la entidad de dominio {@link Movimiento} y {@link MovimientoEntity}.
+ */
 @Mapper(componentModel = "spring")
 public interface MovimientoPersistenceMapper {
 

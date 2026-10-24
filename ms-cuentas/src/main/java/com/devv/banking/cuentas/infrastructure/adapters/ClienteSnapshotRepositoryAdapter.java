@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Adaptador Secundario de Persistencia (Driven Adapter) para consultas flexibles sobre {@link ClienteSnapshot}
+ * por UUID, {@code clienteId}, número de identificación o nombre completo.
+ */
 @Component
 @RequiredArgsConstructor
 public class ClienteSnapshotRepositoryAdapter implements ClienteSnapshotRepositoryPort {

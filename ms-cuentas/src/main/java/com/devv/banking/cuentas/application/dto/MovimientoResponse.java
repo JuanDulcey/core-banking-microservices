@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * DTO de salida que expone el asiento contable de un {@link Movimiento} con saldo previo y resultante.
+ */
 @Schema(description = "Representación de un movimiento bancario registrado")
 public record MovimientoResponse(
         UUID id,

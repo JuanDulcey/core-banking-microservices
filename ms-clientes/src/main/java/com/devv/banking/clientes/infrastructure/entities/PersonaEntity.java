@@ -12,6 +12,12 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+/**
+ * Entidad JPA base mapeada a la tabla {@code personas}.
+ * <p>
+ * Utiliza {@link InheritanceType#JOINED} para mantener un modelo relacional normalizado (3FN),
+ * donde {@link ClienteEntity} comparte la clave primaria {@code persona_id} mediante clave foránea.
+ */
 @Entity
 @Table(name = "personas")
 @Inheritance(strategy = InheritanceType.JOINED)

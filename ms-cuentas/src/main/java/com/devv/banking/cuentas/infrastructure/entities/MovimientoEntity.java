@@ -15,6 +15,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Entidad JPA para la tabla {@code movimientos}, almacenando cada asiento contable con precisión {@code NUMERIC(19,2)}.
+ */
 @Entity
 @Table(name = "movimientos")
 @Getter

@@ -18,6 +18,10 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Manejador centralizado de excepciones HTTP basado en el estándar RFC 9457 ({@link ProblemDetail}).
+ * Traduce las excepciones semánticas del dominio a respuestas JSON estructuradas y consistentes.
+ */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {

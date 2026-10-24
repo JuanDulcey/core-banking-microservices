@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Repositorio Spring Data JPA para consultas cronológicas y por rango de fechas sobre {@link MovimientoEntity}.
+ */
 public interface MovimientoJpaRepository extends JpaRepository<MovimientoEntity, UUID> {
 
     List<MovimientoEntity> findAllByOrderByFechaDesc();

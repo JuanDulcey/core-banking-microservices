@@ -7,6 +7,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * DTO de entrada para la creación de un nuevo cliente ({@code POST /api/clientes}).
+ */
 @Schema(description = "Solicitud para crear un nuevo cliente")
 public record ClienteCreateRequest(
 

@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * DTO de salida con el detalle público de una cuenta bancaria y los datos proyectados de su titular.
+ */
 @Schema(description = "Representación de una cuenta bancaria")
 public record CuentaResponse(
         UUID id,

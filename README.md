@@ -75,8 +75,8 @@ Cada microservicio implementa **Arquitectura Hexagonal estricta**, donde `domain
 core-banking-microservices/
 ├── pom.xml                                              # POM Padre (Java 21 LTS, Spring Boot 3.5.4)
 ├── docker-compose.yml                                   # Orquestación completa de infraestructura y microservicios
-├── BaseDatos.sql                                        # Script consolidado DDL de bases de datos y tablas
-├── core-banking-microservices.postman_collection.json   # Colección Postman v2.1 con Casos de Uso 1 al 5
+├── BaseDatos.sql                                        # Script consolidado DDL + datos semilla idempotentes (Casos de Uso 1–4)
+├── core-banking-microservices.postman_collection.json   # Colección Postman v2.1 con Casos de Uso 1 al 5 + validación CRUD/CRU completa
 ├── docker/postgres/init-databases.sql                   # Inicializador automático de db_clientes y db_cuentas
 ├── ms-clientes/                                         # Microservicio 1: Persona y Cliente (:8081)
 │   ├── Dockerfile
@@ -176,8 +176,8 @@ Con **Java 21+** instalado localmente, un único comando ejecuta toda la pirámi
 | `PUT` / `PATCH` | `/api/cuentas/{id}` | Actualiza tipo de cuenta o estado activo/inactivo (CRU). |
 | `POST` | `/api/movimientos` | Registra depósito (`+`) o retiro (`-`), actualiza saldo o retorna `HTTP 422` **`"Saldo no disponible"`**. |
 | `GET` | `/api/movimientos` | Lista movimientos ordenados por fecha (filtro opcional `?numeroCuenta=478758`). |
-| `PUT` | `/api/movimientos/{id}` | Rectifica el último movimiento vigente recalculando el saldo disponible (CRU). |
-| `GET` | `/api/reportes?fecha=rango&cliente=...` | Genera Estado de Cuenta JSON (acepta `fecha=8/2/2022,10/2/2022` o `fecha=2022-02-08,2022-02-10`, y `?formato=plano` opcional). |
+| `PUT` / `PATCH` | `/api/movimientos/{id}` | Rectifica completa (`PUT`) o parcialmente (`PATCH`) el último movimiento vigente recalculando el saldo disponible (CRU). |
+| `GET` | `/api/reportes?fecha=rango&cliente=...` | Genera Estado de Cuenta JSON (acepta `fecha=8/2/2022,10/2/2022` o `fecha=2022-02-08,2022-02-10`, alias `?clienteId=...`, y `?formato=plano` opcional). |
 
 ### Manejo Estándar de Excepciones (RFC 9457 `ProblemDetail`)
 Cuando ocurre un intento de retiro sin fondos suficientes (**F3**), el API responde con `HTTP 422 Unprocessable Entity`:

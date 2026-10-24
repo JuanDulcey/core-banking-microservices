@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
+/**
+ * DTO de entrada para la actualización parcial de un cliente ({@code PATCH /api/clientes/{id}}).
+ */
 @Schema(description = "Solicitud para actualización parcial de un cliente (PATCH)")
 public record ClientePatchRequest(
 

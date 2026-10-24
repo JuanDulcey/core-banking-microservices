@@ -11,9 +11,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Orquestador transaccional para registro, consulta y rectificación (CRU) de {@link Movimiento} (F2 y F3).
+ * <p>
+ * Adquiere bloqueo pesimista de escritura ({@code SELECT ... FOR UPDATE}) sobre la fila de {@link Cuenta}
+ * antes de calcular y persistir el nuevo saldo disponible, impidiendo condiciones de carrera concurrentes.
+ */
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -25,7 +33,6 @@ public class MovimientoUseCaseImpl implements MovimientoUseCase {
     @Override
     public Movimiento registrar(RegistrarMovimientoCommand command) {
         String numeroCuenta = command.numeroCuenta() != null ? command.numeroCuenta().trim() : "";
-        // Bloqueo pesimista sobre la fila de la cuenta para garantizar consistencia transaccional concurrente
         Cuenta cuenta = cuentaRepository.findByNumeroCuentaForUpdate(numeroCuenta)
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada con número: " + numeroCuenta));
 
@@ -57,6 +64,21 @@ public class MovimientoUseCaseImpl implements MovimientoUseCase {
 
     @Override
     public Movimiento actualizar(UUID id, ActualizarMovimientoCommand command) {
+        return rectificarUltimoMovimiento(id, command.valor(), command.tipoMovimiento(), command.fecha(), false);
+    }
+
+    @Override
+    public Movimiento actualizarParcial(UUID id, ActualizarMovimientoCommand command) {
+        return rectificarUltimoMovimiento(id, command.valor(), command.tipoMovimiento(), command.fecha(), true);
+    }
+
+    private Movimiento rectificarUltimoMovimiento(
+            UUID id,
+            BigDecimal nuevoValorOpcional,
+            String nuevoTipoOpcional,
+            LocalDateTime nuevaFechaOpcional,
+            boolean esParcial
+    ) {
         Movimiento existente = movimientoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movimiento no encontrado con id: " + id));
 
@@ -72,7 +94,13 @@ public class MovimientoUseCaseImpl implements MovimientoUseCase {
             );
         }
 
-        cuenta.recalcularUltimoMovimiento(existente, command.valor(), command.tipoMovimiento(), command.fecha());
+        BigDecimal valorEfectivo = (esParcial && nuevoValorOpcional == null) ? existente.getValor() : nuevoValorOpcional;
+        String tipoEfectivo = (esParcial && (nuevoTipoOpcional == null || nuevoTipoOpcional.isBlank()))
+                ? existente.getTipoMovimiento().getEtiqueta()
+                : nuevoTipoOpcional;
+        LocalDateTime fechaEfectiva = nuevaFechaOpcional != null ? nuevaFechaOpcional : existente.getFecha();
+
+        cuenta.recalcularUltimoMovimiento(existente, valorEfectivo, tipoEfectivo, fechaEfectiva);
         cuentaRepository.save(cuenta);
         return movimientoRepository.save(existente);
     }

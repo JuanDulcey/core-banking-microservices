@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO de entrada para rectificar de forma completa el último movimiento vigente ({@code PUT /api/movimientos/{id}}).
+ */
 @Schema(description = "Solicitud para actualizar un movimiento existente (PUT)")
 public record MovimientoUpdateRequest(
 

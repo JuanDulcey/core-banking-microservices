@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Puerto de Salida (Driven Port): abstrae la persistencia y consultas por rango de fechas del libro de {@link Movimiento}.
+ */
 public interface MovimientoRepositoryPort {
 
     Movimiento save(Movimiento movimiento);

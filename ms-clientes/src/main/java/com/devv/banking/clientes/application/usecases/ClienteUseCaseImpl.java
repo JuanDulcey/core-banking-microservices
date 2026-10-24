@@ -20,6 +20,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Orquestador de Casos de Uso de {@link Cliente} (Capa de Aplicación).
+ * <p>
+ * Coordina la validación de unicidad, el cifrado de contraseñas mediante {@link PasswordEncoderPort},
+ * la persistencia a través de {@link ClienteRepositoryPort} y la publicación de eventos de dominio/integración.
+ */
 @Service
 @Transactional
 @RequiredArgsConstructor

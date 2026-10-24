@@ -28,6 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Adaptador Primario REST (Driving Adapter) para operaciones CRUD sobre {@link Cliente} (F1).
+ * Soporta tanto el prefijo {@code /api/clientes} como {@code /clientes} para máxima compatibilidad.
+ */
 @RestController
 @RequestMapping({"/api/clientes", "/clientes"})
 @RequiredArgsConstructor

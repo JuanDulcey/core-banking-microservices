@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Adaptador Secundario de Persistencia (Driven Adapter) que implementa {@link CuentaRepositoryPort}.
+ * Utiliza {@code saveAndFlush} para materializar inmediatamente incrementos de {@code @Version} dentro de la transacción.
+ */
 @Component
 @RequiredArgsConstructor
 public class CuentaRepositoryAdapter implements CuentaRepositoryPort {

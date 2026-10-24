@@ -11,6 +11,10 @@ import lombok.Setter;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Entidad JPA para la tabla {@code cliente_snapshot}, que materializa localmente los datos esenciales
+ * del cliente recibidos por mensajería asíncrona desde {@code ms-clientes}.
+ */
 @Entity
 @Table(name = "cliente_snapshot")
 @Getter

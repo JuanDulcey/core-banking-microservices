@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Adaptador Secundario de Persistencia (Driven Adapter) que implementa {@link MovimientoRepositoryPort}.
+ */
 @Component
 @RequiredArgsConstructor
 public class MovimientoRepositoryAdapter implements MovimientoRepositoryPort {

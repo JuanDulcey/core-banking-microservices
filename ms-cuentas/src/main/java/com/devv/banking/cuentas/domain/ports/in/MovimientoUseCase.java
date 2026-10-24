@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Puerto de Entrada (Driving Port): contrato de casos de uso para registro transaccional,
+ * consulta y rectificación (CRU) de {@link Movimiento}.
+ */
 public interface MovimientoUseCase {
 
     Movimiento registrar(RegistrarMovimientoCommand command);
@@ -16,6 +20,8 @@ public interface MovimientoUseCase {
     List<Movimiento> listar(String numeroCuenta);
 
     Movimiento actualizar(UUID id, ActualizarMovimientoCommand command);
+
+    Movimiento actualizarParcial(UUID id, ActualizarMovimientoCommand command);
 
     record RegistrarMovimientoCommand(
             String numeroCuenta,

@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Repositorio Spring Data JPA de cuentas bancarias.
+ * Expone consultas {@code PESSIMISTIC_WRITE} ({@code SELECT ... FOR UPDATE}) para serializar operaciones concurrentes de saldo.
+ */
 public interface CuentaJpaRepository extends JpaRepository<CuentaEntity, UUID> {
 
     Optional<CuentaEntity> findByNumeroCuenta(String numeroCuenta);

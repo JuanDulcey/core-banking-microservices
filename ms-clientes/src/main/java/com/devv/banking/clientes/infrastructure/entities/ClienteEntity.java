@@ -10,6 +10,11 @@ import lombok.Setter;
 
 import java.time.Instant;
 
+/**
+ * Entidad JPA derivada que extiende {@link PersonaEntity} y mapea a la tabla {@code clientes}.
+ * <p>
+ * Se enlaza con {@code personas} a través de {@link PrimaryKeyJoinColumn} sobre {@code persona_id}.
+ */
 @Entity
 @Table(name = "clientes")
 @PrimaryKeyJoinColumn(name = "persona_id")

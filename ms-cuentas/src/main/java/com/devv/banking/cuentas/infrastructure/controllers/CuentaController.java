@@ -26,6 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Adaptador Primario REST (Driving Adapter) para operaciones CRU sobre cuentas bancarias (F1).
+ * Soporta tanto {@code /api/cuentas} como {@code /cuentas}.
+ */
 @RestController
 @RequestMapping({"/api/cuentas", "/cuentas"})
 @RequiredArgsConstructor

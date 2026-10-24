@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Puerto de Salida (Driven Port): gestiona el almacenamiento de la proyección local {@link ClienteSnapshot}.
+ */
 public interface ClienteSnapshotRepositoryPort {
 
     ClienteSnapshot save(ClienteSnapshot snapshot);

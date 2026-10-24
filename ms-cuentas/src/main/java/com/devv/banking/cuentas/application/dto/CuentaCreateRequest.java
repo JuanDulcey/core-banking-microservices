@@ -9,6 +9,9 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO de entrada para la apertura de una cuenta bancaria ({@code POST /api/cuentas}).
+ */
 @Schema(description = "Solicitud para apertura de una cuenta bancaria")
 public record CuentaCreateRequest(
 

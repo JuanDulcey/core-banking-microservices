@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "d8f27a1c-49e2-4c88-90b5-8f3e4a120991",
     "name": "Core Banking Microservices — Prueba Técnica Java Senior",
-    "description": "Colección completa para validación de ms-clientes (:8081) y ms-cuentas (:8082): Casos de Uso 1 al 5, operaciones CRUD/CRU, validación F3 ('Saldo no disponible') y reportes F4.",
+    "description": "Colección integral para validación de ms-clientes (:8081) y ms-cuentas (:8082): Casos de Uso 1 al 5, cobertura 100% de verbos CRUD/CRU (GET, POST, PUT, PATCH, DELETE), validación F3 ('Saldo no disponible') y reportes F4.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -32,7 +32,12 @@
       "type": "string"
     },
     {
-      "key": "ultimoMovimientoId",
+      "key": "sandboxClienteId",
+      "value": "CLI-SANDBOX",
+      "type": "string"
+    },
+    {
+      "key": "sandboxMovimientoId",
       "value": "",
       "type": "string"
     }
@@ -161,6 +166,17 @@
         },
         {
           "name": "1.5 Obtener Cliente por ID/Código",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 200 OK', function () { pm.response.to.have.status(200); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -173,6 +189,17 @@
         },
         {
           "name": "1.6 Actualizar Parcialmente Cliente (PATCH)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 200 OK', function () { pm.response.to.have.status(200); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "PATCH",
             "header": [
@@ -225,6 +252,17 @@
         },
         {
           "name": "2.2 Crear Cuenta 225487 (Corriente, 100 — Marianela Montalvo)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -243,6 +281,17 @@
         },
         {
           "name": "2.3 Crear Cuenta 495878 (Ahorros, 0 — Juan Osorio)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -261,6 +310,17 @@
         },
         {
           "name": "2.4 Crear Cuenta 496825 (Ahorros, 540 — Marianela Montalvo)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -279,6 +339,17 @@
         },
         {
           "name": "3.1 Crear Nueva Cuenta 585545 (Corriente, 1000 — Jose Lema)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -297,6 +368,18 @@
         },
         {
           "name": "3.2 Listar Todas las Cuentas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 200 OK', function () { pm.response.to.have.status(200); });",
+                  "pm.test('5 cuentas creadas', function () { pm.expect(pm.response.json().length).to.be.at.least(5); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -374,6 +457,18 @@
         },
         {
           "name": "4.3 Depósito de 150 en Cuenta 495878",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Saldo resultante 150', function () { pm.expect(pm.response.json().saldo).to.eql(150.0); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -399,7 +494,6 @@
                 "exec": [
                   "pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });",
                   "const body = pm.response.json();",
-                  "pm.collectionVariables.set('ultimoMovimientoId', body.id);",
                   "pm.test('Saldo resultante 0', function () { pm.expect(body.saldo).to.eql(0.0); });"
                 ],
                 "type": "text/javascript"
@@ -492,6 +586,18 @@
         },
         {
           "name": "5.2 Estado de Cuenta Formato Plano (Listado JSON exacto Caso de Uso 5)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 200 OK', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Retorna arreglo JSON plano de 2 movimientos', function () { pm.expect(pm.response.json().length).to.eql(2); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -504,6 +610,213 @@
                 { "key": "cliente", "value": "Marianela Montalvo" },
                 { "key": "formato", "value": "plano" }
               ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05. Validación Completa CRUD/CRU Adicional (F1)",
+      "item": [
+        {
+          "name": "6.1 Crear Cliente Temporal Sandbox (POST /api/clientes)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('sandboxClienteId', pm.response.json().clienteId);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente Temporal Prueba\",\n  \"genero\": \"Otro\",\n  \"edad\": 35,\n  \"identificacion\": \"1799999999\",\n  \"direccion\": \"Av. Prueba 100\",\n  \"telefono\": \"099000111\",\n  \"clienteId\": \"CLI-SANDBOX\",\n  \"contrasena\": \"9999\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "{{clientesBaseUrl}}/api/clientes",
+              "host": ["{{clientesBaseUrl}}"],
+              "path": ["api", "clientes"]
+            }
+          }
+        },
+        {
+          "name": "6.2 Actualizar Cliente Completo (PUT /api/clientes/{id})",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 200 OK en PUT Cliente', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Dirección actualizada', function () { pm.expect(pm.response.json().direccion).to.eql('Av. Actualizada 200'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente Temporal Editado\",\n  \"genero\": \"Otro\",\n  \"edad\": 36,\n  \"identificacion\": \"1799999999\",\n  \"direccion\": \"Av. Actualizada 200\",\n  \"telefono\": \"099000222\",\n  \"contrasena\": \"8888\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "{{clientesBaseUrl}}/api/clientes/{{sandboxClienteId}}",
+              "host": ["{{clientesBaseUrl}}"],
+              "path": ["api", "clientes", "{{sandboxClienteId}}"]
+            }
+          }
+        },
+        {
+          "name": "6.3 Eliminar Cliente Temporal Sandbox (DELETE /api/clientes/{id})",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 204 No Content en DELETE Cliente', function () { pm.response.to.have.status(204); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{clientesBaseUrl}}/api/clientes/{{sandboxClienteId}}",
+              "host": ["{{clientesBaseUrl}}"],
+              "path": ["api", "clientes", "{{sandboxClienteId}}"]
+            }
+          }
+        },
+        {
+          "name": "6.4 Actualizar Cuenta Completa (PUT /api/cuentas/585545)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 200 OK en PUT Cuenta', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Cuenta sigue activa y Corriente', function () { pm.expect(pm.response.json().tipoCuenta).to.eql('Corriente'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoCuenta\": \"Corriente\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "{{cuentasBaseUrl}}/api/cuentas/585545",
+              "host": ["{{cuentasBaseUrl}}"],
+              "path": ["api", "cuentas", "585545"]
+            }
+          }
+        },
+        {
+          "name": "6.5 Registrar Movimiento en Cuenta 585545 para Prueba CRU",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 201 Created', function () { pm.response.to.have.status(201); });",
+                  "pm.collectionVariables.set('sandboxMovimientoId', pm.response.json().id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"585545\",\n  \"tipoMovimiento\": \"Deposito\",\n  \"valor\": 200,\n  \"fecha\": \"12/2/2022\"\n}"
+            },
+            "url": {
+              "raw": "{{cuentasBaseUrl}}/api/movimientos",
+              "host": ["{{cuentasBaseUrl}}"],
+              "path": ["api", "movimientos"]
+            }
+          }
+        },
+        {
+          "name": "6.6 Rectificar Movimiento (PUT /api/movimientos/{id})",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 200 OK en PUT Movimiento', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Saldo recalculado a 1250', function () { pm.expect(pm.response.json().saldo).to.eql(1250.0); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoMovimiento\": \"Deposito\",\n  \"valor\": 250,\n  \"fecha\": \"12/2/2022\"\n}"
+            },
+            "url": {
+              "raw": "{{cuentasBaseUrl}}/api/movimientos/{{sandboxMovimientoId}}",
+              "host": ["{{cuentasBaseUrl}}"],
+              "path": ["api", "movimientos", "{{sandboxMovimientoId}}"]
+            }
+          }
+        },
+        {
+          "name": "6.7 Rectificar Parcialmente Fecha Movimiento (PATCH /api/movimientos/{id})",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTP 200 OK en PATCH Movimiento', function () { pm.response.to.have.status(200); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"13/2/2022\"\n}"
+            },
+            "url": {
+              "raw": "{{cuentasBaseUrl}}/api/movimientos/{{sandboxMovimientoId}}",
+              "host": ["{{cuentasBaseUrl}}"],
+              "path": ["api", "movimientos", "{{sandboxMovimientoId}}"]
             }
           }
         }

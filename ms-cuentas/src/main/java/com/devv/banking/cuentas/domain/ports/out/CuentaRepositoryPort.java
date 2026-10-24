@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Puerto de Salida (Driven Port): abstrae el acceso a datos de {@link Cuenta}, incluyendo lecturas
+ * con bloqueo transaccional exclusivo ({@code findByNumeroCuentaForUpdate}) para control de concurrencia.
+ */
 public interface CuentaRepositoryPort {
 
     Cuenta save(Cuenta cuenta);

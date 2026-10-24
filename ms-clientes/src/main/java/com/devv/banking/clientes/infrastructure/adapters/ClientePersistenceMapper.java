@@ -4,6 +4,10 @@ import com.devv.banking.clientes.domain.model.Cliente;
 import com.devv.banking.clientes.infrastructure.entities.ClienteEntity;
 import org.mapstruct.Mapper;
 
+/**
+ * Mapper MapStruct que traduce entre el modelo puro de dominio ({@link Cliente})
+ * y la entidad de persistencia JPA ({@link ClienteEntity}), manteniendo ambas capas desacopladas.
+ */
 @Mapper(componentModel = "spring")
 public interface ClientePersistenceMapper {
 

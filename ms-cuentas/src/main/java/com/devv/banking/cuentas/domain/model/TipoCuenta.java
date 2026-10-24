@@ -4,6 +4,9 @@ import com.devv.banking.cuentas.domain.exception.BusinessValidationException;
 
 import java.util.Locale;
 
+/**
+ * Catálogo de tipos de cuenta bancaria soportados por el dominio.
+ */
 public enum TipoCuenta {
     AHORROS("Ahorros"),
     CORRIENTE("Corriente");

@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+/**
+ * DTO de entrada para la actualización completa de un cliente ({@code PUT /api/clientes/{id}}).
+ */
 @Schema(description = "Solicitud para actualización completa de un cliente (PUT)")
 public record ClienteUpdateRequest(
 

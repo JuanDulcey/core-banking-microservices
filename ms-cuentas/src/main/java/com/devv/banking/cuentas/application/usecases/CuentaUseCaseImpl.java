@@ -20,6 +20,12 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Orquestador de Casos de Uso para operaciones CRU de {@link Cuenta}.
+ * <p>
+ * Valida la existencia y vigencia del cliente consultando localmente {@link ClienteSnapshotRepositoryPort},
+ * eliminando cualquier acoplamiento HTTP síncrono hacia {@code ms-clientes}.
+ */
 @Service
 @Transactional
 @RequiredArgsConstructor

@@ -1,6 +1,7 @@
 package com.devv.banking.cuentas.infrastructure.controllers;
 
 import com.devv.banking.cuentas.application.dto.MovimientoCreateRequest;
+import com.devv.banking.cuentas.application.dto.MovimientoPatchRequest;
 import com.devv.banking.cuentas.application.dto.MovimientoResponse;
 import com.devv.banking.cuentas.application.dto.MovimientoUpdateRequest;
 import com.devv.banking.cuentas.application.usecases.FechaParser;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Adaptador Primario REST (Driving Adapter) para operaciones CRU y registro transaccional de movimientos (F1, F2 y F3).
+ * Soporta tanto {@code /api/movimientos} como {@code /movimientos}.
+ */
 @RestController
 @RequestMapping({"/api/movimientos", "/movimientos"})
 @RequiredArgsConstructor
@@ -64,12 +70,26 @@ public class MovimientoController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Rectificar el último movimiento vigente de una cuenta (CRU)")
+    @Operation(summary = "Rectificar completamente el último movimiento vigente de una cuenta (CRU)")
     public ResponseEntity<MovimientoResponse> actualizar(
             @PathVariable UUID id,
             @Valid @RequestBody MovimientoUpdateRequest request
     ) {
         Movimiento actualizado = movimientoUseCase.actualizar(id, new ActualizarMovimientoCommand(
+                request.tipoMovimiento(),
+                request.valor(),
+                FechaParser.parsearFechaHoraOpcional(request.fecha())
+        ));
+        return ResponseEntity.ok(MovimientoResponse.fromDomain(actualizado));
+    }
+
+    @PatchMapping("/{id}")
+    @Operation(summary = "Rectificar parcialmente el último movimiento vigente de una cuenta (CRU)")
+    public ResponseEntity<MovimientoResponse> actualizarParcial(
+            @PathVariable UUID id,
+            @Valid @RequestBody MovimientoPatchRequest request
+    ) {
+        Movimiento actualizado = movimientoUseCase.actualizarParcial(id, new ActualizarMovimientoCommand(
                 request.tipoMovimiento(),
                 request.valor(),
                 FechaParser.parsearFechaHoraOpcional(request.fecha())

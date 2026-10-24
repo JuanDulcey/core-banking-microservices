@@ -7,6 +7,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO de entrada para registrar un nuevo movimiento contable ({@code POST /api/movimientos}).
+ */
 @Schema(description = "Solicitud para registrar un movimiento contable en una cuenta")
 public record MovimientoCreateRequest(
 

@@ -4,6 +4,10 @@ import com.devv.banking.clientes.domain.model.Cliente;
 
 import java.util.List;
 
+/**
+ * Puerto de Entrada (Driving Port): define el contrato de casos de uso disponibles
+ * para la gestión integral (CRUD) de {@link Cliente}.
+ */
 public interface ClienteUseCase {
 
     Cliente crear(CrearClienteCommand command);

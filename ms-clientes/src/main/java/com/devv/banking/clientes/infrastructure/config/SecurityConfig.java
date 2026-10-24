@@ -10,6 +10,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Configuración de seguridad stateless y provisión del bean {@link BCryptPasswordEncoder}.
+ * Expone los endpoints REST sin bloqueo de sesión para facilitar la integración y pruebas automatizadas.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

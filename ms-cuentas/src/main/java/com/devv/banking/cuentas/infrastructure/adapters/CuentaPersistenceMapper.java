@@ -4,6 +4,9 @@ import com.devv.banking.cuentas.domain.model.Cuenta;
 import com.devv.banking.cuentas.infrastructure.entities.CuentaEntity;
 import org.mapstruct.Mapper;
 
+/**
+ * Mapper MapStruct entre el agregado de dominio {@link Cuenta} y la entidad JPA {@link CuentaEntity}.
+ */
 @Mapper(componentModel = "spring")
 public interface CuentaPersistenceMapper {
 

@@ -88,3 +88,26 @@ Feature: Casos de Uso 2, 3, 4, F3 (Saldo no disponible) y Caso de Uso 5 (Estado 
     And match response.movimientos[1]['Numero Cuenta'] == '496825'
     And match response.movimientos[1]['Movimiento'] == -540.0
     And match response.movimientos[1]['Saldo Disponible'] == 0.0
+
+    # Validación adicional F4: Reporte consultado mediante alias ?clienteId=
+    Given path '/api/reportes'
+    And param fecha = '2022-02-08,2022-02-10'
+    And param clienteId = 'CLI-MARIANELA'
+    When method get
+    Then status 200
+    And match response.clienteId == 'CLI-MARIANELA'
+    And match response.movimientos == '#[2]'
+
+    # Validación adicional F1 (CRU): PATCH sobre movimiento en cuenta 585545
+    Given path '/api/movimientos'
+    And request { "numeroCuenta": "585545", "tipoMovimiento": "Deposito", "valor": 200, "fecha": "10/2/2022" }
+    When method post
+    Then status 201
+    * def movId = response.id
+    And match response.saldo == 1200.0
+
+    Given path '/api/movimientos', movId
+    And request { "valor": 250 }
+    When method patch
+    Then status 200
+    And match response.saldo == 1250.0

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Adaptador Primario REST (Driving Adapter) para generación de reportes de Estado de Cuenta (F4).
+ * Soporta {@code /api/reportes} y {@code /reportes}, admitiendo el parámetro {@code cliente} o su alias {@code clienteId}.
+ */
 @RestController
 @RequestMapping({"/api/reportes", "/reportes"})
 @RequiredArgsConstructor
@@ -29,11 +33,14 @@ public class ReporteController {
             @RequestParam(required = false) String fechaInicio,
             @RequestParam(required = false) String fechaFin,
             @Parameter(description = "clienteId, UUID, identificación o nombre del cliente")
-            @RequestParam String cliente,
+            @RequestParam(required = false) String cliente,
+            @Parameter(description = "Alias opcional si se envía ?clienteId=... en lugar de ?cliente=...")
+            @RequestParam(required = false) String clienteId,
             @Parameter(description = "Formato opcional: 'completo' (por defecto, cuentas + movimientos) o 'plano' (solo arreglo de movimientos)")
             @RequestParam(defaultValue = "completo") String formato
     ) {
-        EstadoCuentaReporte reporte = reporteUseCase.generarEstadoCuenta(fecha, fechaInicio, fechaFin, cliente);
+        String clienteRef = (cliente != null && !cliente.isBlank()) ? cliente : clienteId;
+        EstadoCuentaReporte reporte = reporteUseCase.generarEstadoCuenta(fecha, fechaInicio, fechaFin, clienteRef);
         EstadoCuentaReporteResponse response = EstadoCuentaReporteResponse.fromDomain(reporte);
         if ("plano".equalsIgnoreCase(formato)) {
             return ResponseEntity.ok(response.movimientos());

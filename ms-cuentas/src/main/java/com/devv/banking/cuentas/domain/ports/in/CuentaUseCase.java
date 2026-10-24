@@ -5,6 +5,9 @@ import com.devv.banking.cuentas.domain.model.Cuenta;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Puerto de Entrada (Driving Port): contrato de casos de uso para operaciones CRU sobre {@link Cuenta}.
+ */
 public interface CuentaUseCase {
 
     CuentaDetalle crear(CrearCuentaCommand command);

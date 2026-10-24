@@ -1,0 +1,46 @@
+HELP.md
+target/
+**/target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Confidential & Local Docs (No subir al repo público) ###
+documentaci_n_de_prueba_t_cnica.md
+*prueba_tecnica*.md
+*prueba_t_cnica*.md
+
+### Archives, Logs & Env ###
+*.zip
+*.rar
+*.log
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+### AI / Agent / Editor Metadata ###
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+.apt_generated
+.springBeans
+.sts4-cache
+.gemini/
+.agent/
+
+### NetBeans / Gradle ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
